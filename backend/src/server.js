@@ -1,13 +1,18 @@
 import express from "express"
 import path from "path"
 import { ENV } from "./config/env.js"
+import { connectDB } from "./config/db.js"
 
 const app = express()
 
 const __dirname = path.resolve()
 
 app.get("/api/health",(req,res)=>{
-  res.status(200).send("Server is up and running.")
+  res.status(200).send("Server is helathy.")
+})
+
+app.get("/",(req,res)=>{
+  res.send("Server is up and running.")
 })
 
 // Make app ready for deployment
@@ -19,6 +24,7 @@ if(ENV.NODE_ENV==="production"){
   })
 }
 
-app.listen(ENV.PORT,()=>{
+app.listen(ENV.PORT,async()=>{
+  await connectDB()
   console.log(`Server is running on port http://localhost:3000`)
 })

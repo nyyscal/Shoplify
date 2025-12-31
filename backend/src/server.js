@@ -2,13 +2,17 @@ import express from "express"
 import path from "path"
 import { ENV } from "./config/env.js"
 import { connectDB } from "./config/db.js"
+import { clerkMiddleware } from "@clerk/express";
 
 const app = express()
 
 const __dirname = path.resolve()
 
+app.use(express.json())
+app.use(clerkMiddleware()) //adds auth object under the request
+
 app.get("/api/health",(req,res)=>{
-  res.status(200).send("Server is helathy.")
+  res.status(200).send("Server is healthy.")
 })
 
 app.get("/",(req,res)=>{

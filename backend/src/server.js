@@ -28,9 +28,7 @@ if(ENV.NODE_ENV==="production"){
   })
 }
 
-const startServer = async()=>{
+app.listen(ENV.PORT,async()=>{
   await connectDB()
   console.log(`Server is running on port http://localhost:3000`)
-}
-
-startServer()
+})

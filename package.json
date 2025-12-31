@@ -1,0 +1,21 @@
+{
+  "name": "shoplify",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "build": "npm install --prefix backend && npm install --prefix admin && npm run build --prefix admin",
+    "start":"npm run start --prefix backend"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nyyscal/Shoplify.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nyyscal/Shoplify/issues"
+  },
+  "homepage": "https://github.com/nyyscal/Shoplify#readme",
+  "description": ""
+}

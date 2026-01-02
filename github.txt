@@ -3,4 +3,14 @@ git branch -M main
 git push -u origin main
 
 33:32
-This is a full stack app that uses React Native for mobile platform and ReactJS for Admin Dashboard. Also, express server is used.
+This is a full stack app that uses React Native for mobile platform and ReactJS for Admin Dashboard. Also, express server is used. The backend is deployed in Vercel while the mobile platform is currently under production phase.
+
+Tools Used:
+Sentry
+Inngest
+Clerk
+
+Database:
+MongoDB
+
+Using a webhook method from Clerk to Inngest for login.

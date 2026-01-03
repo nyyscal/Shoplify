@@ -8,12 +8,15 @@ import ProductsPage from './pages/ProductsPage.jsx'
 import CustomersPage from './pages/CustomersPage.jsx'
 import OrdersPage from './pages/OrdersPage.jsx'
 import DashboardLayout from './layouts/DashboardLayout.jsx'
+import PageLoader from './components/PageLoader.jsx'
+
 
 const App = () => {
 
   const {isSignedIn, isLoaded} = useAuth()
 
-  if(!isLoaded) return null
+  if(!isLoaded) return <PageLoader/>
+
   return (
     <Routes>
       <Route path='/login' element={isSignedIn ? <Navigate to ={"/dashboard"}/> : <LoginPage/>}/>

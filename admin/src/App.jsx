@@ -4,7 +4,7 @@ import { SignedIn, SignedOut, SignInButton, UserButton } from '@clerk/clerk-reac
 const App = () => {
   return (
     <div>
-      <h1>Homepage</h1>
+      <h1 className='text-red-500 text-3xl'>Homepage</h1>
       <SignedOut>
         <SignInButton mode='modal'/>
       </SignedOut>

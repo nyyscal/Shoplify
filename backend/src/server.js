@@ -18,11 +18,19 @@ const app = express()
 
 const __dirname = path.resolve()
 
-app.use(cors({
-  origin: [ENV.CLIENT_URL, ENV.FRONTEND_URL],
-  methods: ["GET","POST","PUT","DELETE"],
-  credentials: true,
-}))
+const allowedOrigins =
+  process.env.NODE_ENV === "development"
+    ? [ENV.CLIENT_URL]          
+    : [ENV.FRONTEND_URL];      
+
+app.use(
+  cors({
+    origin: allowedOrigins,
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
+  })
+);
+
 //credentials:true to allow cookies from frontend
 app.use(express.json())
 app.use(clerkMiddleware()) //adds auth object under the request

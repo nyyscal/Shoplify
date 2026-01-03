@@ -1,5 +1,6 @@
 import express from "express"
 import path from "path"
+import cors from "cors"
 import { ENV } from "./config/env.js"
 import { connectDB } from "./config/db.js"
 import { clerkMiddleware } from "@clerk/express";
@@ -11,12 +12,18 @@ import userRoutes from "./routes/user.route.js"
 import orderRoutes from "./routes/order.route.js"
 import reviewRoutes from "./routes/review.route.js"
 import productRoutes from "./routes/product.route.js"
-
+import cartRoutes from "./routes/cart.route.js"
 
 const app = express()
 
 const __dirname = path.resolve()
 
+app.use(cors({
+  origin: [ENV.CLIENT_URL, ENV.FRONTEND_URL],
+  methods: ["GET","POST","PUT","DELETE"],
+  credentials: true,
+}))
+//credentials:true to allow cookies from frontend
 app.use(express.json())
 app.use(clerkMiddleware()) //adds auth object under the request
 
@@ -27,6 +34,7 @@ app.use("/api/user",userRoutes)
 app.use("/api/orders",orderRoutes)
 app.use("/api/reviews",reviewRoutes)
 app.use("/api/products",productRoutes)
+app.use("/api/cart",cartRoutes)
 
 app.get("/api/health",(req,res)=>{
   res.status(200).send("Server is healthy.")

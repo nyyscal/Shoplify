@@ -1,47 +1,74 @@
 import { Product } from "../models/product.model.js";
 import { Order } from "../models/order.model.js";
 import { Review } from "../models/review.model.js";
+import mongoose from "mongoose";
 
-export async function createOrder(req,res){
+export async function createOrder(req, res) {
+  const { orderItems, shippingAddress, paymentMethod, totalPrice } = req.body;
+  const user = req.user;
+
+  // Validate BEFORE transaction
+  if (!orderItems || orderItems.length === 0) {
+    return res.status(400).json({ message: "No order items provided" });
+  }
+
+  const session = await mongoose.startSession();
+
   try {
-    const user = req.user
-    const {orderItems, shippingAddress, paymentMethod, totalPrice} = req.body
+    session.startTransaction();
 
-    if(!orderItems || orderItems.length===0){
-      return res.status(400).json({message:"No order items provided"})
-    }
+    //  Validate & decrement stock first
+    for (const item of orderItems) {
+      const product = await Product.findOneAndUpdate(
+        {
+          _id: item.product._id,
+          stock: { $gte: item.quantity },
+        },
+        {
+          $inc: { stock: -item.quantity },
+        },
+        { session, new: true }
+      );
 
-    //validate product and stocks
-    for (const item of orderItems){
-      const product = await Product.findById(item.product._id)
-      if(!product){
-        return res.status(404).json({message:`Product with id ${item.product._id} not found`})
+      if (!product) {
+        throw new Error(`Insufficient stock or product not found`);
       }
-      if(product.stock < item.quantity){
-        return res.status(400).json({message:`Insufficient stock for product ${product.name}`})
-      }
-    }
-    const order = await Order.create({
-      user: user._id,
-      orderItems,
-      shippingAddress,
-      paymentMethod,
-      totalPrice
-    })
-
-    //update prodcut stock -1 for ordered stock
-    for (const item of orderItems){
-      await Product.findByIdAndUpdate(item.product._id,{
-        $inc: {stock: -item.quantity}, //decrement by 1
-      })
     }
 
-    res.status(201).json({message:"Order created successfully", order})
+    //  Create order
+    const order = await Order.create(
+      [
+        {
+          user: user._id,
+          orderItems,
+          shippingAddress,
+          paymentMethod,
+          totalPrice,
+        },
+      ],
+      { session }
+    );
+
+    //  Commit transaction
+    await session.commitTransaction();
+    session.endSession();
+
+    res.status(201).json({
+      message: "Order created successfully",
+      order: order[0],
+    });
   } catch (error) {
-     console.error("Error creating order:", error);
-    res.status(500).json({message:"Internal server error"})
+    await session.abortTransaction();
+    session.endSession();
+
+    console.error("Transaction failed:", error.message);
+
+    res.status(409).json({
+      message: error.message || "Order creation failed",
+    });
   }
 }
+
 
 export async function getUserOrder(req,res){
   try {

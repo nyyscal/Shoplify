@@ -14,3 +14,5 @@ Database:
 MongoDB
 
 Using a webhook method from Clerk to Inngest for login.
+
+Backend Completed in nearly 5 hours. Using ExpressJS Framework. Cloudinary is used to manage assets.

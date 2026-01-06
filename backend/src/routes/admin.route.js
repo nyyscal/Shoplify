@@ -12,7 +12,7 @@ router.post("/products",upload.array("images",3), createProduct)
 //fileName in frontend:images max: 3 images
 router.get("/products", getAllProducts)
 router.put("/products/:id",upload.array("images",3), updateProduct)
-router.put("/products/:id", deleteProduct)
+router.delete("/products/:id", deleteProduct)
 
 //PUT - Update entire resource
 //PATCH - Update partial resource

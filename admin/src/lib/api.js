@@ -2,8 +2,8 @@ import {axiosInstance} from "./axios.js"
 
 export const productApi = {
   getAll: async() =>{
-    const {data} = await axiosInstance.get("/admin/products")
-    return data
+    const res = await axiosInstance.get("/admin/products")
+    return res.data.products
   },
 
   create: async(formData) =>{

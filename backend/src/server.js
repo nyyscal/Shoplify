@@ -25,7 +25,7 @@ const allowedOrigins =
 
 app.use(
   cors({
-    origin: allowedOrigins,
+   origin: "https://shoplify-adminpanel.vercel.app",
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })

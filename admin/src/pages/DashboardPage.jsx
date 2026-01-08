@@ -16,12 +16,12 @@ const Dashboard = () => {
     queryFn: statsApi.getDashboard
   })
 
-  const recentOrders = ordersData?.orders.slice(0,5) || []
+  const recentOrders = ordersData?.orders?.slice(0,5) || []
 
   const statsCards =[
     {
       name:"Total Revenue",
-      value: statsLoading ? "..." : `$${statsData?.totalRevenue.toFixed(2) || 0}`,
+      value: statsLoading ? "..." : `$${(statsData?.totalRevenue ?? 0).toFixed(2)}`,
       icon: <DollarSignIcon className='size-8'/>
     },
     {
@@ -90,7 +90,7 @@ const Dashboard = () => {
                   {recentOrders.map((order) => (
                     <tr key={order._id}>
                       <td>
-                        <span className="font-medium">#{order._id.slice(-8).toUpperCase()}</span>
+                         #{order._id?.slice?.(-8)?.toUpperCase() ?? "UNKNOWN"}
                       </td>
 
                       <td>

@@ -43,13 +43,15 @@ const Dashboard = () => {
 
   return (
     <div className='space-y-6'>
+      {/* 
+      //Sentry Test Button
       <button className='border border-white'
       onClick={() => {
         throw new Error('This is your first error!');
       }}
     >
       Break the world
-    </button>
+    </button> */}
       <div className='stats stats-vertical lg:stats-horizontal shadow w-full bg-base-100'>
         {statsCards.map((stat) => (
           <div key={stat.name} className="stat">

@@ -43,6 +43,13 @@ const Dashboard = () => {
 
   return (
     <div className='space-y-6'>
+      <button className='border border-white'
+      onClick={() => {
+        throw new Error('This is your first error!');
+      }}
+    >
+      Break the world
+    </button>
       <div className='stats stats-vertical lg:stats-horizontal shadow w-full bg-base-100'>
         {statsCards.map((stat) => (
           <div key={stat.name} className="stat">
@@ -51,6 +58,8 @@ const Dashboard = () => {
             <div className="stat-value">{stat.value}</div>
           </div>
         ))}
+
+        
       </div>
       {/* Recent Orders */}
       <div className='card bg-base-100 shadow-xl'>

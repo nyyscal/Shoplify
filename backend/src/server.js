@@ -53,14 +53,14 @@ app.get("/",(req,res)=>{
   res.send("Server is up and running.")
 })
 
-// Make app ready for deployment
-if(ENV.NODE_ENV==="production"){
-  app.use(express.static(path.join(__dirname, "../admin/dist")))
+// // Make app ready for deployment
+// if(ENV.NODE_ENV==="production"){
+//   app.use(express.static(path.join(__dirname, "../admin/dist")))
 
-  app.get("/{*any}",(req,res)=>{
-    res.sendFile(path.join(__dirname,"../admin","dist","index.html"))
-  })
-}
+//   app.get("/{*any}",(req,res)=>{
+//     res.sendFile(path.join(__dirname,"../admin","dist","index.html"))
+//   })
+// }
 
 app.listen(ENV.PORT,async()=>{
   await connectDB()

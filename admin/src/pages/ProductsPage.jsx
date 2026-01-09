@@ -32,6 +32,7 @@ function ProductsPage() {
     onSuccess: () => {
       closeModal();
       queryClient.invalidateQueries({ queryKey: ["products"] });
+      setImages([])
     },
     onError: (error)=>{
       alert("Error creating product: " + error.message);

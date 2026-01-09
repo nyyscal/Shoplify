@@ -1,3 +1,6 @@
+import fs from "fs";
+import path from "path";
+
 import cloudinary from "../config/cloudinary.js"
 import {Product} from "../models/product.model.js"
 import {Order} from "../models/order.model.js"
@@ -44,16 +47,6 @@ try {
 }
 }
 
-export async function getAllProducts(_,res){
-try {
-  const products =  await Product.find().sort({createdAt:-1}) //-1 : descinding order or latest order
-  res.status(200).json({products})
-} catch (error) {
-  console.error("Error in getAllProducts controller:", error)
-  res.status(500).json({message:"Internal Server Error",error: error.message})
-}
-}
-
 export async function updateProduct(req,res){
 try {
   const {id} = req.params;
@@ -96,6 +89,17 @@ try {
   await product.save()
 
   res.status(200).json({message:"Product updated successfully!",product})   
+} catch (error) {
+  console.error("Error in getAllProducts controller:", error)
+  res.status(500).json({message:"Internal Server Error",error: error.message})
+}
+}
+
+
+export async function getAllProducts(_,res){
+try {
+  const products =  await Product.find().sort({createdAt:-1}) //-1 : descinding order or latest order
+  res.status(200).json({products})
 } catch (error) {
   console.error("Error in getAllProducts controller:", error)
   res.status(500).json({message:"Internal Server Error",error: error.message})

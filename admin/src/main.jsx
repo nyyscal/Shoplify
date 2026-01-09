@@ -5,7 +5,7 @@ import App from './App.jsx'
 import { ClerkProvider } from '@clerk/clerk-react'
 import { BrowserRouter } from 'react-router'
 import * as Sentry from "@sentry/react"
-
+import {Toaster} from "react-hot-toast"
 import {
   QueryClient,
   QueryClientProvider,
@@ -39,6 +39,7 @@ createRoot(document.getElementById('root')).render(
     <BrowserRouter>
      <ClerkProvider publishableKey={PUBLISHABLE_KEY}>
       <QueryClientProvider client={queryClient}>
+        <Toaster/>
         <App />
       </QueryClientProvider>
      </ClerkProvider>

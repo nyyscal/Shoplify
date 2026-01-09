@@ -3,6 +3,7 @@ import { PlusIcon, PencilIcon, Trash2Icon, XIcon, ImageIcon } from "lucide-react
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { productApi } from "../lib/api";
 import { getStockStatusBadge } from "../lib/utils";
+import toast from "react-hot-toast";
 
 function ProductsPage() {
   const [showModal, setShowModal] = useState(false);
@@ -32,6 +33,10 @@ function ProductsPage() {
       closeModal();
       queryClient.invalidateQueries({ queryKey: ["products"] });
     },
+    onError: (error)=>{
+      alert("Error creating product: " + error.message);
+      toast.error("Error creating product: " + error.message);
+    }
   });
 
   const updateProductMutation = useMutation({

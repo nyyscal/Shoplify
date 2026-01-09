@@ -159,7 +159,7 @@ export async function getAllCustomers(_, res) {
     res.status(200).json({ customers });
   } catch (error) {
     console.error("Error fetching customers:", error);
-    res.status(500).json({ error: "Internal server error" });
+    res.status(500).json({ error: "Internal server error",error: error.message });
   }
 }
 
@@ -189,7 +189,7 @@ export async function getDashboardStats(_, res) {
     });
   } catch (error) {
     console.error("Error fetching dashboard stats:", error);
-    res.status(500).json({ error: "Internal server error" });
+    res.status(500).json({ error: "Internal server error",error: error.message});
   }
 }
 

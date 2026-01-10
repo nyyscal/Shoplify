@@ -6,7 +6,7 @@ import { upload } from "../middleware/multer.middleware.js";
 const router = Router()
 
 //Common middlewares for all admin routes - DRY
-// router.use(protectRoute,adminOnly)
+router.use(protectRoute,adminOnly)
 
 router.post("/products",upload.array("images",3), createProduct) 
 //fileName in frontend:images max: 3 images

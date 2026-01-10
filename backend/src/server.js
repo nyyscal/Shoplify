@@ -37,8 +37,8 @@ app.use(express.json())
 
 app.use("/api/inngest",serve({client:inngest, functions}))
 
-// app.use("/api/admin",clerkMiddleware(),adminRoutes)
-app.use("/api/admin",adminRoutes)
+app.use("/api/admin",clerkMiddleware(),adminRoutes)
+// app.use("/api/admin",adminRoutes)
 app.use("/api/user",clerkMiddleware(),userRoutes)
 app.use("/api/orders",clerkMiddleware(),orderRoutes)
 app.use("/api/reviews",clerkMiddleware(),reviewRoutes)

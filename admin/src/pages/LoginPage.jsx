@@ -3,10 +3,9 @@ import React from 'react'
 
 const LoginPage = () => {
   return (
-    <>
-    <div>LoginPage</div>
+    <div className='h-screen hero'>
     <SignIn/>
-    </>
+    </div>
   )
 }
 

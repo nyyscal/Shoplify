@@ -16,3 +16,9 @@ MongoDB
 Using a webhook method from Clerk to Inngest for login.
 
 Backend Completed in nearly 5 hours. Using ExpressJS Framework. Cloudinary is used to manage assets.
+
+//React Native (EXPO)
+In web dev, flex is in row direction by default.
+In mobile dev, flex is in column direction by default.
+
+React Native for client side scripting.

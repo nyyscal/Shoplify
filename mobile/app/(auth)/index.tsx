@@ -3,7 +3,7 @@ import React from 'react'
 import useSocialAuth from '@/hooks/useSocialAuth'
 
 const AuthScreen = () => {
-  const {isLoading, handleSocialAuth} =useSocialAuth()
+  const {loadingStrategy, handleSocialAuth} =useSocialAuth()
   return (
     <View className='px-8 flex-1 justify-center items-center'>
       {/* DEMO IMAGE */}
@@ -15,14 +15,14 @@ const AuthScreen = () => {
         {/* Google Sign-In */}
         <TouchableOpacity className='flex-row itemce] justify-center border border-gray-300 rounded-full px-6 py-3'
         onPress={()=>handleSocialAuth("oauth_google")}
-        disabled={isLoading}
+        disabled={loadingStrategy !== null}
         style={{
           shadowOffset:{width:0, height:1},
           shadowOpacity:0.1,
           // elevation: 2
     }}
         >
-          {isLoading ? (
+          {loadingStrategy === "oauth_google" ? (
             <ActivityIndicator size={"small"} color={"#4285f4"}/>
           ):(
             <View className='flex-row items-center justify-center'>
@@ -35,14 +35,14 @@ const AuthScreen = () => {
         {/* Apple Sign-In */}
         <TouchableOpacity className='flex-row itemce] justify-center border border-gray-300 rounded-full px-6 py-3'
         onPress={()=>handleSocialAuth("oauth_apple")}
-        disabled={isLoading}
+        disabled={loadingStrategy !== null}
         style={{
           shadowOffset:{width:0, height:1},
           shadowOpacity:0.1,
           // elevation: 2
     }}
         >
-          {isLoading ? (
+          {loadingStrategy === "oauth_apple" ? (
             <ActivityIndicator size={"small"} color={"#4285f4"}/>
           ):(
             <View className='flex-row items-center justify-center'>

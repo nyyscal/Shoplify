@@ -3,6 +3,7 @@ import { Redirect, Tabs } from 'expo-router'
 import {Ionicons} from "@expo/vector-icons"
 import { useAuth } from '@clerk/clerk-expo'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import {BlurView} from "expo-blur"
 const TabsLayout = () => {
   const {isSignedIn, isLoaded} = useAuth()
   const insets = useSafeAreaInsets()
@@ -26,15 +27,15 @@ const TabsLayout = () => {
           borderRadius: 24,
           overflow: "hidden",
         },
-        // tabBarBackground: () => (
-        //   <BlurView
-        //     intensity={80}
-        //     tint="dark"
-        //     style={StyleSheet.absoluteFill}
-        //     // StyleSheet.absoluteFill is equal to this 👇
-        //     // { position: "absolute", top: 0, right: 0, left: 0, bottom: 0 }
-        //   />
-        // ),
+        tabBarBackground: () => (
+          <BlurView
+            intensity={80}
+            tint="dark"
+            // style={StyleSheet.absoluteFill}
+            // StyleSheet.absoluteFill is equal to this 👇
+            // { position: "absolute", top: 0, right: 0, left: 0, bottom: 0 }
+          />
+        ),
         tabBarLabelStyle: {
           fontSize: 12,
           fontWeight: 600,

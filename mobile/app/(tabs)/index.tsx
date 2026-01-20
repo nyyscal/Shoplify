@@ -1,11 +1,74 @@
 import SafeScreen from '@/components/SafeScreen'
-import React from 'react'
-import { Text, View } from 'react-native'
+import { Ionicons } from '@expo/vector-icons'
+import React, { useState } from 'react'
+import { Image, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native'
 
 const ShopScreen = () => {
+
+  const CATEGORIES = [
+  { name: "All", icon: "grid-outline" as const },
+  { name: "Electronics", image: require("@/assets/images/electronics.png") },
+  { name: "Fashion", image: require("@/assets/images/fashion.png") },
+  { name: "Sports", image: require("@/assets/images/sports.png") },
+  { name: "Books", image: require("@/assets/images/books.png") },
+];
+  const [searchQuery, setSearchQuery] = useState("")
+  // console.log({searchQuery})
+
+  const [selectedCategory, setSelectedCategory] = useState("All")
   return (
     <SafeScreen>
-      <Text className='text-white'>ShopScreen</Text>
+      <ScrollView className='flex-1' 
+      contentContainerStyle={{paddingBottom: 100}} 
+      showsVerticalScrollIndicator={false}>
+        {/* Header */}
+        <View className='px-6 pb-4 pt-6'>
+          <View className='flex-row items-center justify-between'>
+            <View>
+              <Text className='text-text-primary text-3xl font-bold tracking-tighter'>Austrialian Grocery | Deno</Text>
+              <Text className='text-text-secondary text-3xl mt-1'>Browse all products</Text>
+            </View>
+                <TouchableOpacity className='bg-surface/50 p-3 rounded-full' activeOpacity={0.4}>
+                  <Ionicons name='options-outline' size={22} color={"#fff"}/>
+                </TouchableOpacity>
+          </View>
+        
+          {/* Search Bar */}
+          <View className='bg-surface flex-row items-center mt-2 px-5 py-1 rounded-2xl'>
+            <Ionicons color={"#666"} size={22} name='search'/>
+            <TextInput
+            placeholder='Search for products'
+            placeholderTextColor={"#666"}
+            className='flex-1 ml-3 text-base text-text-primary'
+            value={searchQuery}
+            onChangeText={setSearchQuery}
+            />
+          </View>
+
+      </View>
+
+      {/* Category Filter */}
+      <View className='mb-6'>
+        <ScrollView 
+        horizontal 
+        showsHorizontalScrollIndicator
+        contentContainerStyle={{paddingHorizontal:20}}
+        >
+          {CATEGORIES.map(category=>{
+            const isSelected = selectedCategory === category.name
+            return(
+              <TouchableOpacity className={`mr-3 rounded-2xl size-20 overflow-hidden items-center justify-center ${isSelected ? "bg-primary" :"bg-surface"}`} key={category.name} onPress={()=>setSelectedCategory(category.name)}>
+              {category.icon ? (<Ionicons name={'grid-outline'} size={36} color={isSelected ? "#121212" :"#fff"}/>
+              ) : (
+                <Image source={category.image} className='size-12' resizeMode='contain'/>
+              )}
+              </TouchableOpacity>
+            )
+          }
+          )}
+        </ScrollView>
+      </View>
+      </ScrollView>
     </SafeScreen>
   )
 }

@@ -3,7 +3,8 @@ import { useAuth } from "@clerk/clerk-expo"
 import { useEffect } from "react"
 //send auth token
 
-const API_URL = "http://localhost:300/api"
+// const API_URL = "http://localhost:300/api" for local testing
+const API_URL = "https://shoplify-61ar.onrender.com/api"
 
 const api = axios.create({
   baseURL: API_URL,

@@ -1,6 +1,8 @@
+import ProductsGrid from '@/components/ProductsGrid'
 import SafeScreen from '@/components/SafeScreen'
+import useProducts from '@/hooks/useProducts'
 import { Ionicons } from '@expo/vector-icons'
-import React, { useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import { Image, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native'
 
 const ShopScreen = () => {
@@ -16,6 +18,27 @@ const ShopScreen = () => {
   // console.log({searchQuery})
 
   const [selectedCategory, setSelectedCategory] = useState("All")
+
+  const {data:products, isLoading, error, isError} = useProducts()
+  // console.log(products)
+
+  const filteredProducts = useMemo(()=>{
+    if(!products) return []
+
+    let filtered = products
+    //Filter by Category
+    if(selectedCategory !== "All"){
+      filtered = filtered.filter(product=> product.category === selectedCategory)
+    }
+    //Filter by Search Query
+    if(searchQuery.trim() !== ""){
+      filtered = filtered.filter(product=> product.name.toLowerCase().includes(searchQuery.toLowerCase()))
+    }
+
+    return filtered
+  },[products,selectedCategory,searchQuery])
+  console.log(filteredProducts)
+
   return (
     <SafeScreen>
       <ScrollView className='flex-1' 
@@ -67,6 +90,17 @@ const ShopScreen = () => {
           }
           )}
         </ScrollView>
+      </View>
+
+      <View className='px-6 mb-6'>
+        <View className='flex-row items-center justify-between mb-4'>
+          {/* Products Scroll */}
+          <Text className='text-text-primary justify-between mb-4'>Products</Text>
+          <Text className='text-text-secondary text-sm'>{filteredProducts.length} items</Text>
+        </View>
+
+        {/* Products Grid */}
+        <ProductsGrid products={filteredProducts} isLoading={isLoading} isError={isError}/>
       </View>
       </ScrollView>
     </SafeScreen>

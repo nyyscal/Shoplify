@@ -1,4 +1,3 @@
-import React from 'react'
 import { useSSO } from '@clerk/clerk-expo'
 import { useState } from 'react'
 import { Alert } from 'react-native'

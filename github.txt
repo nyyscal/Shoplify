@@ -22,3 +22,6 @@ In web dev, flex is in row direction by default.
 In mobile dev, flex is in column direction by default.
 
 React Native for client side scripting.
+
+Tanstack Query used to fetch data in React Native.
+Interceptor concept used in api.js file.

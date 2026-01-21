@@ -25,3 +25,5 @@ React Native for client side scripting.
 
 Tanstack Query used to fetch data in React Native.
 Interceptor concept used in api.js file.
+
+React 19 version is unstable with clerk. App might crash during development in some instance.

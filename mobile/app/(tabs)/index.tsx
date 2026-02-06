@@ -19,7 +19,7 @@ const ShopScreen = () => {
 
   const [selectedCategory, setSelectedCategory] = useState("All")
 
-  const {data:products, isLoading, error, isError} = useProducts()
+  const {data:products =[], isLoading, error, isError} = useProducts()
   // console.log(products)
 
   const filteredProducts = useMemo(()=>{

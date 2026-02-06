@@ -9,8 +9,8 @@ const useProducts = () => {
   const res  = useQuery({
     queryKey:["products"],
     queryFn: async()=>{
-      const {data} = await api.get<Product[]>("/products")
-      return data 
+      const {data} = await api.get("/products")
+      return data.products
     }
   })
   return res

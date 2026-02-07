@@ -13,7 +13,7 @@ const useWishlist = () => {
   } = useQuery({
     queryKey: ["wishlist"],
     queryFn: async () => {
-      const { data } = await api.get<{ wishlist: Product[] }>("/users/wishlist");
+      const { data } = await api.get<{ wishlist: Product[] }>("/user/wishlist");
       return data.wishlist;
     },
   });

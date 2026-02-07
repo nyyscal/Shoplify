@@ -3,8 +3,7 @@ import SafeScreen from '@/components/SafeScreen'
 import useProducts from '@/hooks/useProducts'
 import { Ionicons } from '@expo/vector-icons'
 import React, { useMemo, useState } from 'react'
-import { Button, Image, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native'
-import * as Sentry from "@sentry/react-native";
+import { Image, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native'
 const ShopScreen = () => {
 
   const CATEGORIES = [
@@ -93,7 +92,17 @@ const ShopScreen = () => {
         </ScrollView>
       </View>
 
-       <Button title='Try!' onPress={ () => { Sentry.captureException(new Error('First error')) }}/>
+       {/* <TouchableOpacity 
+       onPress={() =>{
+        Sentry.logger.error(
+          Sentry.logger.fmt`Uh on, something broke, here's the error: 'Test: Uncaught Error from Button'`
+        )
+        throw new Error("Test: Uncaught Error from Button")
+       }} 
+       className='bg-purple-500 py-3 px-4 rounded-lg'
+       >
+        <Text className='text-white text-center font-semibold'>Test Uncaught Error (Crash)</Text>
+       </TouchableOpacity> */}
         
 
       <View className='px-6 mb-6'>

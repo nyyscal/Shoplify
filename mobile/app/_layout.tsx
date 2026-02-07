@@ -1,5 +1,5 @@
 import { Stack } from "expo-router";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { MutationCache, QueryCache, QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ClerkProvider, ClerkLoaded } from "@clerk/clerk-expo";
 import { tokenCache } from "@clerk/clerk-expo/token-cache";
 
@@ -19,13 +19,41 @@ Sentry.init({
   // Configure Session Replay
   replaysSessionSampleRate: 1.0,
   replaysOnErrorSampleRate: 1,
-  integrations: [Sentry.mobileReplayIntegration()],
+  integrations: [Sentry.mobileReplayIntegration({})],
 
   // uncomment the line below to enable Spotlight (https://spotlightjs.com)
   // spotlight: __DEV__,
 });
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  queryCache: new QueryCache({
+    onError: (error:any, query) =>{
+      Sentry.captureException(error,{
+        tags: {
+        type: "react-query-error",
+        queryKey: query.queryKey[0]?.toString() || "unknown"
+      },
+    extra: {
+      errorMessage: error.message,
+      statusCode: error.response?.status,
+      queryKey: query.queryKey,
+    }
+    })
+    }
+  }),
+    mutationCache: new MutationCache({
+    onError: (error: any) => {
+      // global error handler for all mutations
+      Sentry.captureException(error, {
+        tags: { type: "react-query-mutation-error" },
+        extra: {
+          errorMessage: error.message,
+          statusCode: error.response?.status,
+        },
+      });
+    },
+  }),
+});
 
 export default Sentry.wrap(function RootLayout() {
   return (

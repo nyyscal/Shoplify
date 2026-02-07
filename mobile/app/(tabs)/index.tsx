@@ -3,8 +3,8 @@ import SafeScreen from '@/components/SafeScreen'
 import useProducts from '@/hooks/useProducts'
 import { Ionicons } from '@expo/vector-icons'
 import React, { useMemo, useState } from 'react'
-import { Image, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native'
-
+import { Button, Image, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import * as Sentry from "@sentry/react-native";
 const ShopScreen = () => {
 
   const CATEGORIES = [
@@ -54,6 +54,7 @@ const ShopScreen = () => {
                 <TouchableOpacity className='bg-surface/50 p-3 rounded-full' activeOpacity={0.4}>
                   <Ionicons name='options-outline' size={22} color={"#fff"}/>
                 </TouchableOpacity>
+               
           </View>
         
           {/* Search Bar */}
@@ -91,6 +92,9 @@ const ShopScreen = () => {
           )}
         </ScrollView>
       </View>
+
+       <Button title='Try!' onPress={ () => { Sentry.captureException(new Error('First error')) }}/>
+        
 
       <View className='px-6 mb-6'>
         <View className='flex-row items-center justify-between mb-4'>

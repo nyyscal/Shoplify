@@ -68,13 +68,19 @@ export async function updateAddress(req,res){
   }
 }
 
-export async function getAddress(req,res){
-try {
-  const user = req.userres.status(200).json({addresses: user.addresses})
-} catch (error) {
-  console.error("Error get address:", error);
-    res.status(500).json({message:"Internal server error"})
-}
+export async function getAddress(req, res) {
+  try {
+    const user = req.user;
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res.status(200).json({ addresses: user.addresses });
+  } catch (error) {
+    console.error("Error getting addresses:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
 }
 
 export async function deleteAddress(req,res){

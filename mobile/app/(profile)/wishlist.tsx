@@ -30,7 +30,7 @@ const WishlistScreen = () => {
       {
         onSuccess: () => Alert.alert("Success", `${productName} added to cart!`),
         onError: (error: any) => {
-          Alert.alert("Error", error?.response?.data?.error || "Failed to add to cart");
+          Alert.alert("Error", error?.response?.data?.error || "Failed to add to cart!");
         },
       }
     );

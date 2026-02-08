@@ -1,4 +1,4 @@
-import { View, Text, Alert, ActivityIndicator, TouchableOpacity, ScrollView } from 'react-native'
+import { View, Text, Alert, ActivityIndicator, TouchableOpacity, ScrollView, Dimensions } from 'react-native'
 import React, { useState } from 'react'
 import { router, useLocalSearchParams } from 'expo-router'
 import { useProduct } from '@/hooks/useProduct'
@@ -6,15 +6,14 @@ import useCart from '@/hooks/useCart'
 import useWishlist from '@/hooks/useWishlist'
 import SafeScreen from '@/components/SafeScreen'
 import { Ionicons } from '@expo/vector-icons'
-import { Dimensions } from 'react-native'
 import { Image } from 'expo-image'
 
 const {width} = Dimensions.get("window")
 // mobile independent width
 const ProductDetailScreen = () => {
-  const {id} = useLocalSearchParams()
+  const {id} = useLocalSearchParams<{id: string}>()
   // console.log(id)
-  const {data:product, isError, isLoading} = useProduct(id as string)
+  const {data:product, isError, isLoading} = useProduct(id)
   const {addToCart, isAddingToCart} = useCart()
   const {isInWishlist, toggleWishlist, isRemovingFromWishlist, isAddingToWishlist} = useWishlist()
   const [selectedImageIndex, setSelectedImageIndex] = useState(0)

@@ -6,10 +6,10 @@ const router = Router()
 
 router.use(protectRoute)
 
-router.post("/addresess",addAddress)
-router.get("/addresess",getAddress)
-router.put("/addresess/:addressId",updateAddress)
-router.delete("/addresess/:addressId",deleteAddress)
+router.post("/addressess",addAddress)
+router.get("/addressess",getAddress)
+router.put("/addressess/:addressId",updateAddress)
+router.delete("/addressess/:addressId",deleteAddress)
 
 
 //wishlist routes

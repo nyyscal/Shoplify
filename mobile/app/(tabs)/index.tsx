@@ -36,7 +36,7 @@ const ShopScreen = () => {
 
     return filtered
   },[products,selectedCategory,searchQuery])
-  console.log(filteredProducts)
+  // console.log(filteredProducts)
 
   return (
     <SafeScreen>

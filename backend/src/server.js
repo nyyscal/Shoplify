@@ -13,6 +13,7 @@ import orderRoutes from "./routes/order.route.js"
 import reviewRoutes from "./routes/review.route.js"
 import productRoutes from "./routes/product.route.js"
 import cartRoutes from "./routes/cart.route.js"
+import paymentRoutes from "./routes/payment.route.js"
 
 const app = express()
 
@@ -44,6 +45,7 @@ app.use("/api/orders",clerkMiddleware(),orderRoutes)
 app.use("/api/reviews",clerkMiddleware(),reviewRoutes)
 app.use("/api/products",clerkMiddleware(),productRoutes)
 app.use("/api/cart",clerkMiddleware(),cartRoutes)
+app.use("/api/payment",clerkMiddleware(),paymentRoutes)
 
 app.get("/api/health",(req,res)=>{
   res.status(200).send("Server is healthy.")

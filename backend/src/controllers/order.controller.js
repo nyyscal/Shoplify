@@ -69,24 +69,30 @@ export async function createOrder(req, res) {
   }
 }
 
-export async function getUserOrder(req,res){
+export async function getUserOrders(req, res) {
   try {
-    const orders = (await Order.find({clerkId:req.user.clerkId}).populate('orderItems.product')).sort({createdAt:-1})
+    const orders = await Order.find({ clerkId: req.user.clerkId })
+      .populate("orderItems.product")
+      .sort({ createdAt: -1 });
 
-    //check if each order has been reviewed
-    const orderIds = orders.map((order) =>order._id)
-    const reviews = await Review.find({orderId: {$in: orderIds}})
-    const reviewedOrderIds = new Set(reviews.map((review)=>review.orderId.toString()))
+    // check if each order has been reviewed
 
-    const orderWithReviewStatus = await Promise.all(orders.map(async (order)=>{
-      return {
-        ...order.toObject(),
-        hasReviewed: reviewedOrderIds.has(order._id.toString()), //double bang operator to convert to boolean
-      }
-    }))
-    res.status(200).json({orders: orderWithReviewStatus})
+    const orderIds = orders.map((order) => order._id);
+    const reviews = await Review.find({ orderId: { $in: orderIds } });
+    const reviewedOrderIds = new Set(reviews.map((review) => review.orderId.toString()));
+
+    const ordersWithReviewStatus = await Promise.all(
+      orders.map(async (order) => {
+        return {
+          ...order.toObject(),
+          hasReviewed: reviewedOrderIds.has(order._id.toString()),
+        };
+      })
+    );
+
+    res.status(200).json({ orders: ordersWithReviewStatus });
   } catch (error) {
-    console.error("Error getting order:", error);
-    res.status(500).json({message:"Internal server error"})
+    console.error("Error in getUserOrders controller:", error);
+    res.status(500).json({ error: "Internal server error" });
   }
 }

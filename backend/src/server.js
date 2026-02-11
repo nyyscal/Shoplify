@@ -47,12 +47,13 @@ app.use(express.json())
 
 app.use("/api/inngest",serve({client:inngest, functions}))
 
-app.use("/api/admin", adminRoutes)
-app.use("/api/user", userRoutes)
-app.use("/api/orders", orderRoutes)
-app.use("/api/reviews", reviewRoutes)
-app.use("/api/products", productRoutes)
-app.use("/api/cart", cartRoutes)
+app.use("/api/admin",clerkMiddleware(),adminRoutes)
+// app.use("/api/admin",adminRoutes)
+app.use("/api/user",clerkMiddleware(),userRoutes)
+app.use("/api/orders",clerkMiddleware(),orderRoutes)
+app.use("/api/reviews",clerkMiddleware(),reviewRoutes)
+app.use("/api/products",clerkMiddleware(),productRoutes)
+app.use("/api/cart",clerkMiddleware(),cartRoutes)
 
 app.get("/api/health",(req,res)=>{
   res.status(200).send("Server is healthy.")

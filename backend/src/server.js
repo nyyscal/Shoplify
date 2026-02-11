@@ -19,6 +19,14 @@ const app = express()
 
 const __dirname = path.resolve()
 
+app.use("/api/payment",(req,res,next)=>{
+  if(req.originalUrl === "/api/payment/webhook"){
+    express.raw({type:"application/json"})(req,res,next)
+  }else{
+    express.json()(req,res,next) //parse json for non-webhook routes
+  }
+},paymentRoutes)
+
 const allowedOrigins =
   process.env.NODE_ENV === "development"
     ? [ENV.CLIENT_URL]          
@@ -45,7 +53,6 @@ app.use("/api/orders",clerkMiddleware(),orderRoutes)
 app.use("/api/reviews",clerkMiddleware(),reviewRoutes)
 app.use("/api/products",clerkMiddleware(),productRoutes)
 app.use("/api/cart",clerkMiddleware(),cartRoutes)
-app.use("/api/payment",clerkMiddleware(),paymentRoutes)
 
 app.get("/api/health",(req,res)=>{
   res.status(200).send("Server is healthy.")
